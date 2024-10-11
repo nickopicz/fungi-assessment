@@ -25,7 +25,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ messages }) => {
 					key={index}
 					content={message.content}
 					role={message.role}
-					className={index === messages.length - 1 ? 'animate-bounce' : ''}
+					// className={index === messages.length - 1 ? 'animat' : ''}
 				/>
 			))}
 		</div>

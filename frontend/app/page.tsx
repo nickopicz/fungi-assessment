@@ -10,6 +10,8 @@ interface Message {
 	role: 'user' | 'ai';
 }
 
+//Single page website because of simplicity and lack of user requirements
+//
 export default function Home() {
 	// Type state using the Message type
 	const [messages, setMessages] = useState<Message[]>([]);
@@ -21,13 +23,13 @@ export default function Home() {
 
 		const userMessage: Message = { role: 'user', content: inputMessage };
 
-		// Mocking AI response (replace with actual API call in the future)
+		// Mocking AI response, to be replaced
 		const aiResponse: Message = {
 			role: 'ai',
 			content: `AI: I will respond to "${inputMessage}"`,
 		};
 
-		// Update messages state with both user and AI messages at once
+		// Update messages state with both user and AI messages
 		setMessages((prevMessages) => [...prevMessages, userMessage, aiResponse]);
 
 		setInputMessage(''); // Clear the input field
