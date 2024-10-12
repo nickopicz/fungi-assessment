@@ -19,7 +19,7 @@ def summarize_message(message: str, project_info: dict = None) -> str:
     if project_info:
         prompt = f"Answer this question '{message}', and describe the requested data: {project_info}"
     else:
-        prompt = f"Summarize this message: {message}"
+        prompt = f"{message}"
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",

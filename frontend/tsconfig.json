@@ -27,7 +27,8 @@
 		"**/*.tsx",
 		".next/types/**/*.ts",
 		"app/index.jsx",
-		"app/page.tsx"
+		"app/page.tsx",
+		"components/LottiePlayer.jsx"
 	],
 	"exclude": ["node_modules"]
 }
