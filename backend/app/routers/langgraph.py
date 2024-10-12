@@ -1,25 +1,21 @@
-import requests
+from app.services.defi_service import get_yield_rates
+from app.services.social_feed_service import get_social_feed
+from app.services.openai_service import summarize_message, get_openai_project_name
 from fastapi import APIRouter
 
 router = APIRouter()
 
-# Node 1: Fetch yield rates from DeFiLlama
-@router.get("/defillama-yield-rates")
-async def get_yield_rates():
-    url = "https://api.llama.fi/yields"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    return {"error": "Failed to fetch yield rates"}
-
-# Node 2: Fetch social feed from RSS3
-@router.get("/rss3-social-feed/{wallet_address}")
-async def get_social_feed(wallet_address: str):
-    url = f"https://api.rss3.io/v1/wallets/{wallet_address}/social-feeds"
-    headers = {
-        "Authorization": "Bearer YOUR_RSS3_API_KEY"
-    }
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.json()
-    return {"error": f"Failed to fetch social feed for {wallet_address}"}
+def build_langgraph(message: str):
+    # Node 1: Decide which API to use based on the message
+    if "yield rates" in message:
+        project_name = get_openai_project_name(message)  # Node 2: NLP tool
+        yield_rates = get_yield_rates(project_name)  # Node 3: DeFiLlama API tool
+        result = summarize_message(f"Yield rates for {project_name}", yield_rates)  # Node 4: OpenAI API tool
+    elif "social feed" in message:
+        wallet_address = extract_wallet_from_message(message)  # Node 2: NLP tool
+        social_feed = get_social_feed(wallet_address)  # Node 3: RSS3 API tool
+        result = summarize_message(f"Social feed for {wallet_address}", social_feed)  # Node 4: OpenAI API tool
+    else:
+        result = summarize_message(message)  # Fallback node using OpenAI
+    
+    return result
