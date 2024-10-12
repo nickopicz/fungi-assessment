@@ -3,6 +3,7 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
+#need to get api key for rss3
 @router.get("/rss3-social-feed/{wallet_address}")
 async def get_social_feed(wallet_address: str):
     url = f"https://api.rss3.io/v1/wallets/{wallet_address}/social-feeds"
