@@ -28,7 +28,8 @@
 		".next/types/**/*.ts",
 		"app/index.jsx",
 		"app/page.tsx",
-		"components/LottiePlayer.jsx"
+		"components/LottiePlayer.jsx",
+		"components/InputArea.jsx"
 	],
 	"exclude": ["node_modules"]
 }

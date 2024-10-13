@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import LottiePlayer from './LottiePlayer';
 
-interface InputAreaProps {
-	inputMessage: string;
-	setInputMessage: React.Dispatch<React.SetStateAction<string>>;
-	sendMessage: () => void;
-}
 
-const InputArea: React.FC<InputAreaProps> = ({
+const InputArea = ({
 	inputMessage,
 	setInputMessage,
 	sendMessage,
 }) => {
+
 	const loading = useSelector((state) => state.loading.isLoading);
 
 	useEffect(() => {
 		console.log('loading val: ', loading);
+
 	}, [loading]);
 
 	return (
@@ -30,7 +27,8 @@ const InputArea: React.FC<InputAreaProps> = ({
 			/>
 			{loading ? (
 				<div className="ml-2">
-					<LottiePlayer />
+					<LottiePlayer
+					/>
 				</div>
 			) : (
 				<button

@@ -15,6 +15,18 @@ def get_openai_project_name(message: str) -> str:
     )
     return response.choices[0].message['content'].strip()
 
+
+def get_token_name(message: str) -> str:
+    prompt = f"In one word, return just the abbreviation of the crypto currency: {message}"
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful DeFi assistant."},
+            {"role": "user", "content": prompt},
+        ],
+    )
+    return response.choices[0].message['content'].strip()
+
 def summarize_message(message: str, project_info: dict = None) -> str:
     if project_info:
         prompt = f"Answer this question '{message}', and describe the requested data: {project_info}"
