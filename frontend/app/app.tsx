@@ -14,27 +14,22 @@ interface Message {
 const App: React.FC = () => {
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [inputMessage, setInputMessage] = useState<string>('');
-	// const [fullResponse, setFullResponse] = useState<string>('');
 	const fullResponse = useRef('');
 	const dispatch = useDispatch();
 
 	// Function to handle AI message stream updates
 	const handleStreamUpdate = (streamedContent: string) => {
 		setMessages((prevMessages) => {
-			// Check if the last message is from AI and append to it
 			const lastMessage = prevMessages[prevMessages.length - 1];
 			if (lastMessage && lastMessage.role === 'ai') {
 				fullResponse.current = streamedContent;
-				console.log('full response: ', fullResponse);
-				// Append only new content from streamedContent
 				const updatedMessages = [...prevMessages];
 				updatedMessages[updatedMessages.length - 1] = {
 					...lastMessage,
-					content: fullResponse.current, // Append new chunk of content
+					content: fullResponse.current,
 				};
 				return updatedMessages;
 			} else {
-				// If there's no AI message yet, create a new one
 				return [...prevMessages, { content: streamedContent, role: 'ai' }];
 			}
 		});
@@ -46,14 +41,12 @@ const App: React.FC = () => {
 		dispatch(setLoading(true));
 		const userMessage: string = inputMessage;
 
-		// Add user's message to the chat
 		setMessages((prevMessages) => [
 			...prevMessages,
 			{ content: userMessage, role: 'user' },
 		]);
-		setInputMessage(''); // Clear the input field
+		setInputMessage('');
 
-		// Send message to backend and start streaming AI response
 		try {
 			await sendMessageToBackend(userMessage, handleStreamUpdate);
 		} catch (error) {
@@ -66,15 +59,23 @@ const App: React.FC = () => {
 	};
 
 	return (
-		<div className="min-h-screen bg-gray-900 p-8 text-white flex justify-center items-center">
-			<div className="max-w-2xl w-full bg-gray-800 p-10 shadow-2xl rounded-lg">
-				<h1 className="text-4xl font-bold mb-6 text-center">DeFi AI Chatbot</h1>
-				<ChatContainer messages={messages} />
-				<InputArea
-					inputMessage={inputMessage}
-					setInputMessage={setInputMessage}
-					sendMessage={sendMessage}
-				/>
+		<div className="w-screen h-screen flex flex-col bg-gray-900 text-white">
+			<div className="flex-grow flex flex-col justify-between items-center w-full h-full">
+				<div className="w-full h-full bg-gray-800 p-4 shadow-2xl rounded-lg flex flex-col">
+					<h1 className="text-4xl font-bold mb-4 text-center">
+						DeFi AI Chatbot
+					</h1>
+					<div className="flex-grow overflow-y-auto">
+						<ChatContainer messages={messages} />
+					</div>
+					<div className="mt-4">
+						<InputArea
+							inputMessage={inputMessage}
+							setInputMessage={setInputMessage}
+							sendMessage={sendMessage}
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

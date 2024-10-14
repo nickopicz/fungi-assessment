@@ -1,42 +1,40 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import LottiePlayer from './LottiePlayer';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'; // Import the up arrow icon
 
 const InputArea = ({
 	inputMessage,
 	setInputMessage,
 	sendMessage,
 }) => {
-
 	const loading = useSelector((state) => state.loading.isLoading);
 
 	useEffect(() => {
 		console.log('loading val: ', loading);
-
 	}, [loading]);
 
 	return (
-		<div className="flex justify-center items-center p-1">
-			<input
-				className="text-background p-1 rounded-lg"
-				type="text"
+		<div className="flex justify-center items-center p-2 px-10">
+			<textarea
+				className="text-white p-2 rounded-lg w-full resize-none bg-foreground"
+				rows={3}
 				value={inputMessage}
 				onChange={(e) => setInputMessage(e.target.value)}
 				placeholder="Type your message..."
 			/>
 			{loading ? (
 				<div className="ml-2">
-					<LottiePlayer
-					/>
+					<LottiePlayer />
 				</div>
 			) : (
 				<button
 					onClick={sendMessage}
-					className="ml-2 bg-accent text-background p-2 rounded-lg hover:bg-blue-600"
-					style={{ width: '100px', height: '40px' }} // Match button size to the animation
+					className="ml-2 bg-accent text-background p-2 rounded-lg hover:bg-foreground flex justify-center items-center"
+					style={{ width: '85px', height: '85px' }} // Adjust button size to fit the icon
 				>
-					Send
+					<FontAwesomeIcon icon={faArrowUp} className="text-background" /> {/* Up Arrow Icon */}
 				</button>
 			)}
 		</div>

@@ -10,7 +10,7 @@ const Message = ({ content, role, className = '' }) => {
 
 	return (
 		<div
-			className={`p-2 my-2 rounded-lg ${role === 'user'
+			className={`p-3 my-2 rounded-lg ${role === 'user'
 				? 'bg-accent text-right text-background'
 				: 'bg-background text-gray-200'
 				} ${className}`}
@@ -19,12 +19,14 @@ const Message = ({ content, role, className = '' }) => {
 				<Image
 					src={content} // The base64-encoded image string
 					alt="AI generated graph"
-					width={500} // Provide a width
-					height={300} // Provide a height
+					width={600} // Provide a width
+					height={500} // Provide a height
 					className="max-w-full h-auto"
 				/>
 			) : (
-				<p className="break-words">{content}</p>
+				<p className="break-words text-lg md:text-xl"> {/* Added text-lg for larger size */}
+					{content}
+				</p>
 			)}
 		</div>
 	);
