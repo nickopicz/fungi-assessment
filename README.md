@@ -6,11 +6,6 @@ This project is a DeFi (Decentralized Finance) assessment tool that combines fro
 1. [Project Overview](#project-overview)
 2. [Features](#features)
 3. [Tech Stack](#tech-stack)
-4. [Backend Setup](#backend-setup)
-    - [APIs Used](#apis-used)
-5. [Frontend Setup](#frontend-setup)
-6. [Endpoints](#endpoints)
-7. [License](#license)
 
 ## Project Overview
 
