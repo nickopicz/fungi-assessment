@@ -29,7 +29,8 @@
 		"app/index.jsx",
 		"app/page.tsx",
 		"components/LottiePlayer.jsx",
-		"components/InputArea.jsx"
+		"components/InputArea.jsx",
+		"components/Message.jsx"
 	],
 	"exclude": ["node_modules"]
 }

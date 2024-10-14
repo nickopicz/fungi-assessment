@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Message from '@/components/Message';
-
+import Message from './Message';
 interface ChatContainerProps {
 	messages: { content: string; role: 'user' | 'ai' }[];
 }

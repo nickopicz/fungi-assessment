@@ -4,51 +4,63 @@ import io
 import base64
 import pandas as pd
 import time
+import os
+
+# Ensure the API key is retrieved from environment or hardcoded here for testing
+api_key = os.getenv("CRYPTO_API_KEY") or "d59cde7463d08ea6ff638733477b9afd02c9b481f6518f1f6f4597b868774bb7"
 
 # Function to convert date to UNIX timestamp
 def get_unix_timestamp(days_ago: int):
     return int(time.time()) - (days_ago * 24 * 60 * 60)
 
-# Function to fetch historical prices from CoinGecko API using the correct endpoint
-def get_historical_prices(token_id: str, days: int = 180):
-    # Get the UNIX timestamps for 'from' and 'to' date range
-    to_timestamp = int(time.time())  # Current timestamp
-    from_timestamp = get_unix_timestamp(days)  # Timestamp from X days ago
+# Function to fetch historical prices from CryptoCompare API
+def get_historical_data(fsym: str, limit: int = 90, toTs: int = None):
+    # URL for CryptoCompare blockchain historical data endpoint
+    url = f"https://min-api.cryptocompare.com/data/blockchain/histo/day"
     
-    # URL for the range endpoint
-    url = f"https://pro-api.coingecko.com/api/v3/coins/{token_id}/market_chart/range"
+    # Parameters for the request
     params = {
-        'a'
-        'vs_currency': 'usd',
-        'from': from_timestamp,
-        'to': to_timestamp
+        'fsym': fsym,
+        'limit': limit,
+        'toTs': toTs
     }
-    
-    response = requests.get(url, params=params)
-    data = response.json()
-    
-    # Extract prices (timestamp, price)
-    prices = data.get('prices', [])
-    print("data: ", data)
 
-    return prices
+    # Headers with API key
+    headers = {
+        'authorization': f'Apikey {api_key}'
+    }
 
-# Function to plot the historical high prices and return base64 image
-def plot_price_data(prices):
-    # Extract timestamps and high prices
-    timestamps = [price[0] for price in prices]
-    high_prices = [price[1] for price in prices]
+    response = requests.get(url, params=params, headers=headers)
     
-    print("prices: ", prices)
+    # Check for a successful response
+    if response.status_code == 200:
+        data = response.json()['Data']['Data']
+        print("data: ", data)
+        return data
+    else:
+        print(f"Error: {response.status_code}, Message: {response.json().get('Message')}")
+        return []
+
+# Function to plot the historical data (e.g., average transaction value) and return base64 image
+def plot_data(data, fsym):
+    if not data:
+        print("No data to plot.")
+        return
+
+    field='average_transaction_value'
+    # Extract timestamps and chosen field data
+    timestamps = [point['time'] for point in data]
+    field_values = [point[field] for point in data]
+    
     # Convert timestamps to readable dates
-    dates = [pd.to_datetime(ts, unit='ms').date() for ts in timestamps]
+    dates = [pd.to_datetime(ts, unit='s').date() for ts in timestamps]
 
     # Plot the data using Matplotlib
     plt.figure(figsize=(10, 5))
-    plt.plot(dates, high_prices, label='High Prices (USD)')
+    plt.plot(dates, field_values, label=f'{field.replace("_", " ").title()}')
     plt.xlabel('Date')
-    plt.ylabel('Price (USD)')
-    plt.title('Historical High Prices Over Last 6 Months')
+    plt.ylabel(f'{field.replace("_", " ").title()} of {fsym}')
+    plt.title(f'Historical {field.replace("_", " ").title()}')
     plt.xticks(rotation=45)
     plt.tight_layout()
 

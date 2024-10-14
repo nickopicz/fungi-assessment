@@ -17,7 +17,7 @@ def get_openai_project_name(message: str) -> str:
 
 
 def get_token_name(message: str) -> str:
-    prompt = f"In one word, return just the abbreviation of the crypto currency: {message}"
+    prompt = f"In only one word as the response, return the abbreviation of the crypto currency: {message}"
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -27,7 +27,7 @@ def get_token_name(message: str) -> str:
     )
     return response.choices[0].message['content'].strip()
 
-def summarize_message(message: str, project_info: dict = None) -> str:
+async def summarize_message_stream(message: str, project_info: dict = None):
     if project_info:
         prompt = f"Answer this question '{message}', and describe the requested data: {project_info}"
     else:
@@ -36,8 +36,15 @@ def summarize_message(message: str, project_info: dict = None) -> str:
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are a helpful DeFi assistant."},
             {"role": "user", "content": prompt},
         ],
+        stream=True  # Enable streaming
     )
-    return response.choices[0].message['content'].strip()
+
+    # Stream the tokens as they are generated
+    for chunk in response:
+        content = chunk['choices'][0].get('delta', {}).get('content', '')
+        if content:
+            yield content
+

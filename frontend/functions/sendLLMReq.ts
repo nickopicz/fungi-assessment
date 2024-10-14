@@ -1,8 +1,4 @@
-export interface MessageResponse {
-    response: string;
-}
-
-export const sendMessageToBackend = async (message: string): Promise<string> => {
+export const sendMessageToBackend = async (message, onStreamUpdate) => {
     try {
         const response = await fetch('http://127.0.0.1:8000/chat', {
             method: 'POST',
@@ -12,14 +8,28 @@ export const sendMessageToBackend = async (message: string): Promise<string> => 
             body: JSON.stringify({ content: message }),
         });
 
-        if (!response.ok) {
-            throw new Error('Failed to send message to the backend');
+        if (!response.body) {
+            throw new Error('No response body');
         }
-        const data = await response.json();
-        console.log("response: ", data["response"])
-        return data.response;
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let receivedText = '';
+
+        // Stream data
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            receivedText += chunk;
+
+            // Call the callback function to update the UI progressively
+            onStreamUpdate(receivedText);
+        }
+
+        return receivedText;  // Final response after full streaming
     } catch (error) {
-        console.error('Error with to backend:', error);
+        console.error('Error with streaming from backend:', error);
         return 'Error communicating with the server';
     }
 };
