@@ -76,5 +76,46 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
+
 ### Frontend Setup
-   
+
+1. Navigate to the frontend directory:
+```bash
+cd ../frontend
+```
+
+2. Install the required dependencies:
+```bash
+npm install
+```
+
+3. Run the Next.js development server:
+```bash
+npm run dev
+```
+The frontend will now be running at ***http://localhost:3000***
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
