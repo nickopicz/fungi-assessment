@@ -17,6 +17,7 @@ This system consists of a frontend and backend:
 - Handles API requests, processes user messages, and streams responses.
 - Leverages OpenAI's GPT models for natural language processing and decision-making.
 - Integrates with DeFiLlama to fetch yield rates, RSS3 for social feed data, and other services for historical price information.
+- ***NOTE: The Social Feed only works on an example wallet, so it will not be usable with other wallets at the moment, I do not have a wallet of my own to test on.***
 
 ## Features
 
@@ -96,13 +97,17 @@ npm run dev
 The frontend will now be running at ***http://localhost:3000***
 
 
-##Testing the Chatbot
+### Testing the Chatbot
 
  1. Open a browser and go to http://localhost:3000.
  2. Interact with the chatbot by asking questions related to yield rates, social feeds, or historical price data.
 
 
+Example Queries
 
+    Yield Rates: "What are the yield rates for Lido?"
+    Social Feed: "What's the latest news for my wallet on wallet?"
+    Historical Prices: "Show me the historical prices for Bitcoin."
 
 
 
