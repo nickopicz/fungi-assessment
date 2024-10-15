@@ -28,13 +28,13 @@ const InputArea = ({
 			) : (
 				<button
 					onClick={sendMessage}
-					className="ml-2 bg-accent text-background p-2 rounded-lg hover:bg-foreground flex justify-center items-center"
-					style={{ width: '95px', height: '95px' }} // Adjust button size to fit the icon
+					className="ml-2 bg-accent text-background rounded-full hover:bg-foreground flex justify-center items-center"
+					style={{ width: '60px', height: '60px' }} // Adjust button size to fit the icon
 				>
 					<FontAwesomeIcon
 						icon={faArrowUp}
 						className="text-background"
-						style={{ width: "40px", height: "40px" }}
+						style={{ width: "30px", height: "30px" }}
 					/>
 				</button>
 			)}

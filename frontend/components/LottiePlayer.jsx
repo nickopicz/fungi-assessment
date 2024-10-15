@@ -25,8 +25,8 @@ const LottiePlayer = () => {
 		<div
 			ref={animationContainer}
 			style={{
-				width: '95px',
-				height: '95px',
+				width: '60px',
+				height: '60px',
 			}}
 		/>
 	);
