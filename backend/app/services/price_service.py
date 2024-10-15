@@ -35,7 +35,6 @@ def get_historical_data(fsym: str, limit: int = 90, toTs: int = None):
     # Check for a successful response
     if response.status_code == 200:
         data = response.json()['Data']['Data']
-        print("data: ", data)
         return data
     else:
         print(f"Error: {response.status_code}, Message: {response.json().get('Message')}")

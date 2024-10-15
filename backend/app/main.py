@@ -1,13 +1,9 @@
-from fastapi import FastAPI
+import asyncio
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from app.routers.langgraph import build_langgraph
-import os
-from dotenv import load_dotenv
 from fastapi.responses import StreamingResponse
-
-# Load environment variables for OpenAI
-load_dotenv()
 
 app = FastAPI()
 
@@ -30,8 +26,18 @@ async def root():
 @app.post("/chat")
 async def chat_response(request: MessageRequest):
     message = request.content.lower()
-    
-    # Use StreamingResponse to stream the OpenAI response
-    response_generator = await build_langgraph(message)
-    
-    return StreamingResponse(response_generator, media_type="text/plain")
+
+    try:
+        # Use asyncio.wait_for to set a timeout
+        timeout_seconds = 15  # Set timeout duration (in seconds)
+        response_generator = await asyncio.wait_for(build_langgraph(message), timeout=timeout_seconds)
+
+        # Use StreamingResponse to stream the OpenAI response
+        return StreamingResponse(response_generator, media_type="text/plain")
+
+    except asyncio.TimeoutError:
+        # If the timeout is exceeded, raise an error
+        raise HTTPException(status_code=504, detail="Request timed out. Please try again later.")
+    except Exception as e:
+        # Catch any other unexpected errors
+        raise HTTPException(status_code=500, detail=str(e))

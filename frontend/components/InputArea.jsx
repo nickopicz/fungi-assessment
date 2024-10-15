@@ -34,7 +34,11 @@ const InputArea = ({
 					className="ml-2 bg-accent text-background p-2 rounded-lg hover:bg-foreground flex justify-center items-center"
 					style={{ width: '85px', height: '85px' }} // Adjust button size to fit the icon
 				>
-					<FontAwesomeIcon icon={faArrowUp} className="text-background" /> {/* Up Arrow Icon */}
+					<FontAwesomeIcon
+						icon={faArrowUp}
+						className="text-background"
+						style={{ width: "40px", height: "40px" }}
+					/> {/* Up Arrow Icon */}
 				</button>
 			)}
 		</div>

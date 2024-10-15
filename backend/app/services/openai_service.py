@@ -48,3 +48,22 @@ async def summarize_message_stream(message: str, project_info: dict = None):
         if content:
             yield content
 
+
+def decide_request_type(message: str):
+    print("attempting to get request type:")
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful DeFi assistant, answer the question with one of the following that best describes the request: [yields, social feed, historical prices, unrelated]"},
+                {"role": "user", "content": f"Pick one of the descriptors: [yields, social feed, historical prices, unrelated] for this prompt: {message}"},  # Using f-string here
+            ],
+        )
+        print("message type: ", response.choices[0].message['content'].strip())
+        return response.choices[0].message['content'].strip()
+    except Exception as e:
+        print("Error:", str(e))
+        return None
+    # Stream the tokens as they are generated
+    
+
