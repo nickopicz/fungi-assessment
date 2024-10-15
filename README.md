@@ -96,7 +96,10 @@ npm run dev
 The frontend will now be running at ***http://localhost:3000***
 
 
+Testing the Chatbot
 
+ 1. Open a browser and go to http://localhost:3000.
+ 2. Interact with the chatbot by asking questions related to yield rates, social feeds, or historical price data.
 
 
 
