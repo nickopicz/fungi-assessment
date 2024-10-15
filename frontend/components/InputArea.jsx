@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import LottiePlayer from './LottiePlayer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons'; // Import the up arrow icon
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 const InputArea = ({
 	inputMessage,
 	setInputMessage,
 	sendMessage,
 }) => {
+
 	const loading = useSelector((state) => state.loading.isLoading);
-	// const loading = true;
-	useEffect(() => {
-		console.log('loading val: ', loading);
-	}, [loading]);
 
 	return (
 		<div className="flex justify-center items-center p-2 px-10">
@@ -38,7 +35,7 @@ const InputArea = ({
 						icon={faArrowUp}
 						className="text-background"
 						style={{ width: "40px", height: "40px" }}
-					/> {/* Up Arrow Icon */}
+					/>
 				</button>
 			)}
 		</div>

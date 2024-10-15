@@ -19,22 +19,39 @@ const App: React.FC = () => {
 		},
 	]);
 	const [inputMessage, setInputMessage] = useState<string>('');
+
+	//mutable variable for every new message
 	const fullResponse = useRef('');
+
 	const dispatch = useDispatch();
 
 	// Function to handle AI message stream updates
 	const handleStreamUpdate = (streamedContent: string) => {
+		//setMessages state setting arrow function
 		setMessages((prevMessages) => {
+			// Get the last message from the previous messages array
 			const lastMessage = prevMessages[prevMessages.length - 1];
+
+			// Check if the last message exists and if it's from the 'ai' role
 			if (lastMessage && lastMessage.role === 'ai') {
+				// Update the fullResponse ref with the latest streamed content
 				fullResponse.current = streamedContent;
+
+				// Create a copy of the previous messages to avoid mutating the state directly
 				const updatedMessages = [...prevMessages];
+
+				// Update the content of the last message in the copied messages array
+				// We keep all properties of the last message, but update its content with the full streamed response
 				updatedMessages[updatedMessages.length - 1] = {
 					...lastMessage,
 					content: fullResponse.current,
 				};
+
+				// Return the updated messages array to update the state
 				return updatedMessages;
 			} else {
+				// If there is no 'ai' message or it's the first 'ai' message in this interaction,
+				// add a new message with the streamed content and 'ai' role
 				return [...prevMessages, { content: streamedContent, role: 'ai' }];
 			}
 		});
@@ -42,27 +59,39 @@ const App: React.FC = () => {
 
 	// Function to send a message and handle AI response
 	const sendMessage = async () => {
+		// If the input is empty or just whitespace, exit the function
 		if (!inputMessage.trim()) return;
+
+		// Dispatch a Redux action to set a loading state (UI can show a loading indicator)
 		dispatch(setLoading(true));
+
+		// Store the user's message in a variable
 		const userMessage: string = inputMessage;
 
+		// Add the user's message to the chat (with 'user' role) and update the messages state
 		setMessages((prevMessages) => [
-			...prevMessages,
-			{ content: userMessage, role: 'user' },
+			...prevMessages, // Keep previous messages
+			{ content: userMessage, role: 'user' }, // Add the new user message
 		]);
+
+		// Clear the input field after sending the message
 		setInputMessage('');
 
 		try {
+			// Send the user's message to the backend, and handle the AI's streamed response
 			await sendMessageToBackend(userMessage, handleStreamUpdate);
 		} catch (error) {
+			// If there's an error with the backend request, add an error message to the chat from the 'ai'
 			setMessages((prevMessages) => [
 				...prevMessages,
 				{
-					content: 'Sorry, we were not able to process your request',
-					role: 'ai',
+					content: 'Sorry, we were unable to process your request', // Error message content
+					role: 'ai', // Mark it as a message from the AI
 				},
 			]);
 		}
+
+		// After the message has been sent and handled, stop the loading indicator
 		dispatch(setLoading(false));
 	};
 

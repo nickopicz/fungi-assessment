@@ -5,6 +5,7 @@ const LottiePlayer = () => {
 
 	const animationContainer = useRef(null);
 
+	//renders lottie animation on mounting
 	useEffect(() => {
 		const instance = lottie.loadAnimation({
 			container: animationContainer.current,
@@ -14,6 +15,7 @@ const LottiePlayer = () => {
 			path: "/loading.json",
 
 		});
+
 		console.log("animation rendered")
 
 		return () => instance.destroy()

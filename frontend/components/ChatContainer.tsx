@@ -8,7 +8,7 @@ interface ChatContainerProps {
 const ChatContainer: React.FC<ChatContainerProps> = ({ messages }) => {
 	const chatRef = useRef<HTMLDivElement>(null);
 
-	// Scroll to the bottom when a new message is added
+	// Scrolls to the bottom when a new message is added
 	useEffect(() => {
 		if (chatRef.current) {
 			chatRef.current.scrollTop = chatRef.current.scrollHeight;

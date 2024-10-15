@@ -64,6 +64,5 @@ def decide_request_type(message: str):
     except Exception as e:
         print("Error:", str(e))
         return None
-    # Stream the tokens as they are generated
     
 
