@@ -18,7 +18,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ messages }) => {
 	return (
 		<div
 			ref={chatRef}
-			className="h-150 overflow-y-scroll bg-gray-800 p-4 mb-4 flex flex-col gap-4"
+			className="h-full max-h-[calc(100vh-200px)] overflow-y-auto bg-background p-4 mb-4 flex flex-col gap-4"
 		>
 			{messages.map((message, index) => (
 				<Message
@@ -28,7 +28,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({ messages }) => {
 					className={
 						message.role === 'user'
 							? 'bg-accent ml-auto w-3/4 text-right'
-							: 'bg-background mr-auto w-3/4 text-left'
+							: 'bg-foreground mr-auto w-3/4 text-left'
 					}
 				/>
 			))}

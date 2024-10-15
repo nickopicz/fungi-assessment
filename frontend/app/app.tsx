@@ -12,7 +12,12 @@ interface Message {
 }
 
 const App: React.FC = () => {
-	const [messages, setMessages] = useState<Message[]>([]);
+	const [messages, setMessages] = useState<Message[]>([
+		{
+			content: 'Hello, I am your friendly DeFi assistant! How can I help you?',
+			role: 'ai',
+		},
+	]);
 	const [inputMessage, setInputMessage] = useState<string>('');
 	const fullResponse = useRef('');
 	const dispatch = useDispatch();
@@ -52,7 +57,10 @@ const App: React.FC = () => {
 		} catch (error) {
 			setMessages((prevMessages) => [
 				...prevMessages,
-				{ content: 'Error fetching response from AI', role: 'ai' },
+				{
+					content: 'Sorry, we were not able to process your request',
+					role: 'ai',
+				},
 			]);
 		}
 		dispatch(setLoading(false));
@@ -61,7 +69,7 @@ const App: React.FC = () => {
 	return (
 		<div className="w-screen h-screen flex flex-col bg-gray-900 text-white">
 			<div className="flex-grow flex flex-col justify-between items-center w-full h-full">
-				<div className="w-full h-full bg-gray-800 p-4 shadow-2xl rounded-lg flex flex-col">
+				<div className="w-full h-full bg-background p-4 shadow-2xl rounded-lg flex flex-col">
 					<h1 className="text-4xl font-bold mb-4 text-center">
 						DeFi AI Chatbot
 					</h1>

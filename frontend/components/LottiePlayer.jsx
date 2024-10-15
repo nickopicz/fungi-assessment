@@ -23,8 +23,8 @@ const LottiePlayer = () => {
 		<div
 			ref={animationContainer}
 			style={{
-				width: '50px', // Adjust the width to match the button size
-				height: '50px', // Adjust the height to match the button size
+				width: '95px',
+				height: '95px',
 			}}
 		/>
 	);

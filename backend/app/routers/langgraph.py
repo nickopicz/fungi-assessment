@@ -9,6 +9,7 @@ router = APIRouter()
 
 async def build_langgraph(message: str):
     try:
+        
         # Determine the request type (e.g., yields, social feed, historical prices, unrelated)
         request_type = decide_request_type(message)
         print("Request type: ", request_type)
@@ -16,9 +17,9 @@ async def build_langgraph(message: str):
         # Handle different request types
         if "yields" in request_type:
             try:
-                project_name = get_openai_project_name(message)  # NLP tool
-                yield_rates = get_yield_rates(project_name)  # DeFiLlama API tool
-                return summarize_message_stream(f"Yield rates for {project_name}", yield_rates)  # OpenAI API tool
+                project_name = get_openai_project_name(message)  # NLP tool for getting DeFi project name
+                yield_rates = get_yield_rates(project_name)  # DeFiLlama API tool for retrieving yield rates
+                return summarize_message_stream(f"Yield rates for {project_name}", yield_rates)  # OpenAI summarizer
             except Exception as e:
                 logging.error(f"Error fetching yield rates: {e}")
                 raise HTTPException(status_code=500, detail="Error fetching yield rates.")
@@ -26,8 +27,8 @@ async def build_langgraph(message: str):
         elif "social feed" in request_type:
             try:
                 wallet_address = "example_wallet"
-                social_feed = get_social_feed(wallet_address)  # RSS3 API tool
-                return summarize_message_stream(f"Describe this action from the DeFi social feed for {social_feed}")  # OpenAI API tool
+                social_feed = get_social_feed(wallet_address)  # RSS3 API for retrieving social activity on the blockchain
+                return summarize_message_stream(f"Describe this action from the DeFi social feed for {social_feed}")  # OpenAI summarizer
             except Exception as e:
                 logging.error(f"Error fetching social feed: {e}")
                 raise HTTPException(status_code=500, detail="Error fetching social feed.")
@@ -37,14 +38,14 @@ async def build_langgraph(message: str):
                 token_id = get_token_name(message)  # Extract the token from the message
                 prices = get_historical_data(token_id)  # Fetch historical price data
                 base64_img = plot_data(prices, token_id)  # Plot the price data and return base64 string
-                return f"data:image/png;base64,{base64_img}"  # Return the image
+                return f"data:image/png;base64,{base64_img}"  # Return the image in base64
             except Exception as e:
                 logging.error(f"Error fetching historical prices: {e}")
                 raise HTTPException(status_code=500, detail="Error fetching historical prices.")
 
         else:
             try:
-                return summarize_message_stream(message)  # Fallback using OpenAI
+                return summarize_message_stream(message)  # Fallback using OpenAI prompter
             except Exception as e:
                 logging.error(f"Error summarizing message: {e}")
                 raise HTTPException(status_code=500, detail="Error processing your request.")
