@@ -53,26 +53,28 @@ Ensure you have the following installed:
 ### Backend Setup
 
 1. Clone the repository:
+```bash
+git clone [https://github.com/nickopicz/fungi-assessment.git]
+cd fungi-assessment/backend
+```
 
-   ```bash
-   git clone [https://github.com/nickopicz/fungi-assessment.git]
-   cd fungi-assessment/backend
-  
 2. Create a virtual environment and activate it:
-  ```bash
-  python -m venv venv
-  source venv/bin/activate
-  ```
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
 3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+```
 
 4. Create a **.env** file in the **backend** directory to store your OpenAI API key and your Crypto Compare key, with names "OPENAI_API_KEY" and "CRYPTO_API_KEY" respectively.
 
 5. Run the FastAPI server:
-  ```bash
-  uvicorn app.main:app --reload
-  ```
+```bash
+uvicorn app.main:app --reload
+```
 
 ### Frontend Setup
    
