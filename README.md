@@ -110,6 +110,11 @@ Example Queries
 -  Historical Prices: "Show me the historical prices for Bitcoin."
 
 
+### Error Handling
+
+If the backend is taking to long, the user will be notified by the chatbot with an error message, letting the user know that their request could not be fulfilled.
+
+
 
 
 
