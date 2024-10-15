@@ -105,9 +105,9 @@ The frontend will now be running at ***http://localhost:3000***
 
 Example Queries
 
-    Yield Rates: "What are the yield rates for Lido?"
-    Social Feed: "What's the latest news for my wallet on wallet?"
-    Historical Prices: "Show me the historical prices for Bitcoin."
+-  Yield Rates: "What are the yield rates for Lido?"
+-  Social Feed: "What's the latest news for my wallet on wallet?"
+-  Historical Prices: "Show me the historical prices for Bitcoin."
 
 
 
