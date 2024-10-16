@@ -16,7 +16,7 @@ This system consists of a frontend and backend:
 - Built using **FastAPI**.
 - Handles API requests, processes user messages, and streams responses.
 - Leverages OpenAI's GPT models for natural language processing and decision-making.
-- Integrates with DeFiLlama to fetch yield rates, RSS3 for social feed data, and other services for historical price information.
+- Integrates with DeFiLlama to fetch yield rates, RSS3 for social feed data, and CryptoCompare for historical data and current price of a token.
 - ***NOTE: The Social Feed only works on an example wallet, so it will not be usable with other wallets at the moment, I do not have a wallet of my own to test on.***
 
 ## Features
@@ -24,7 +24,8 @@ This system consists of a frontend and backend:
 1. **Yield Rate Lookup**: The chatbot can return real-time yield rates for different DeFi tokens.
 2. **Social Feed Monitoring**: Get the latest updates from the DeFi social feed for a specific wallet.
 3. **Historical Price Data**: Fetch and visualize historical price data for various tokens.
-4. **Streaming Responses**: The chatbot streams responses in real-time, improving the user experience by progressively updating the interface as data becomes available.
+4. **Coin Price**: Fetch and provide insight for the current price of any given coin in USD.
+5. **Streaming Responses**: The chatbot streams responses in real-time, improving the user experience by progressively updating the interface as data becomes available.
 
 ## Project Structure
 
@@ -107,7 +108,8 @@ Example Queries
 
 -  Yield Rates: "What are the yield rates for Lido?"
 -  Social Feed: "What's the latest news for my wallet on wallet?"
--  Historical Prices: "Show me the historical prices for Bitcoin."
+-  Historical Value: "Show me the historical value for Bitcoin."
+-  Token's Current Price: "Can you tell me the price of Ethereum?"
 
 
 ### Error Handling
