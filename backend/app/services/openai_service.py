@@ -55,8 +55,8 @@ def decide_request_type(message: str):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a helpful DeFi assistant, answer the question with one of the following that best describes the request: [yields, social feed, historical prices, unrelated]"},
-                {"role": "user", "content": f"Pick one of the descriptors: [yields, social feed, historical prices, unrelated] for this prompt: {message}"},  # Using f-string here
+                {"role": "system", "content": "You are a helpful DeFi assistant, answer the question with one of the following that best describes the request: [yields, social feed, historical prices, coin price, unrelated]"},
+                {"role": "user", "content": f"Pick one of the descriptors: [yields, social feed, historical prices, coin price, unrelated] for this prompt: {message}"},  # Using f-string here
             ],
         )
         print("message type: ", response.choices[0].message['content'].strip())
@@ -65,4 +65,18 @@ def decide_request_type(message: str):
         print("Error:", str(e))
         return None
     
-
+def get_limit(message: str):
+    print("attempting to get limit:")
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are very good at returning the length of days in integer format from a message requesting the value of a cryptocurrency."},
+                {"role": "user", "content": f"Return in an integer, the amount of days from this prompt: {message}"},  # Using f-string here
+            ],
+        )
+        print("limit for crypto api: ", response.choices[0].message['content'].strip())
+        return response.choices[0].message['content'].strip()
+    except Exception as e:
+        print("Error:", str(e))
+        return None
