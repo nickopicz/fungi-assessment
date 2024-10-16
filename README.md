@@ -63,7 +63,7 @@ cd fungi-assessment/backend
 2. Create a virtual environment and activate it:
 ```bash
 python -m venv venv
-source venv/bin/activate
+venv\Scripts\activate
 ```
 
 3. Install the required dependencies:
