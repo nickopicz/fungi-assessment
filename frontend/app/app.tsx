@@ -41,7 +41,7 @@ const App: React.FC = () => {
 				const updatedMessages = [...prevMessages];
 
 				// Update the content of the last message in the copied messages array
-				// We keep all properties of the last message, but update its content with the full streamed response
+				// keep all properties of the last message, but update its content with the streamed response
 				updatedMessages[updatedMessages.length - 1] = {
 					...lastMessage,
 					content: fullResponse.current,

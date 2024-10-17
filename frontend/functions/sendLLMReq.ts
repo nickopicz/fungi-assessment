@@ -18,7 +18,7 @@ export const sendMessageToBackend = async (message: string, onStreamUpdate) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ content: message }),  // Send the message in the request body
-            signal: controller.signal,  // Attach the abort signal to handle timeouts
+            signal: controller.signal,  // Attach the abort signal to handle timeout
         });
 
         // Clear the timeout once a response is received, so it doesn't trigger unnecessarily

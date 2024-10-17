@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 const Message = ({ content, role, className = '' }) => {
 	// Check if content is a base64-encoded image
-	const isBase64Image = content.startsWith('data:image/png;base64,'); // Adjust for your encoding
+	const isBase64Image = content.startsWith('data:image/png;base64,');
 
 	useEffect(() => {
 		console.log('is image? ', isBase64Image);
@@ -25,18 +25,18 @@ const Message = ({ content, role, className = '' }) => {
 					: 'bg-background text-left text-gray-200 self-start'
 					} ${className}`}
 				style={{
-					maxWidth: '75%',          // Max width is 75% of the container
-					width: 'fit-content',      // Width adjusts based on content
-					wordBreak: 'break-word',   // Ensure long words wrap properly
-					alignSelf: role === 'user' ? 'flex-end' : 'flex-start', // Align messages based on role
+					maxWidth: '75%',
+					width: 'fit-content',
+					wordBreak: 'break-word',
+					alignSelf: role === 'user' ? 'flex-end' : 'flex-start',
 				}}
 			>
 				{isBase64Image ? (
 					<Image
-						src={content} // The base64-encoded image string
+						src={content}
 						alt="AI generated graph"
-						width={600} // Provide a width
-						height={500} // Provide a height
+						width={600}
+						height={500}
 						className="max-w-full h-auto"
 					/>
 				) : (

@@ -28,11 +28,10 @@ async def chat_response(request: MessageRequest):
     message = request.content.lower()
 
     try:
-        # Use asyncio.wait_for to set a timeout
-        timeout_seconds = 15  # Set timeout duration (in seconds)
+        timeout_seconds = 15 
         response_generator = await asyncio.wait_for(build_langgraph(message), timeout=timeout_seconds)
 
-        # Use StreamingResponse to stream the OpenAI response
+        # streaming the OpenAI response
         return StreamingResponse(response_generator, media_type="text/plain")
 
     except asyncio.TimeoutError:
