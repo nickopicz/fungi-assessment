@@ -2,6 +2,9 @@
 
 DeFi AI Chatbot is an interactive AI-powered assistant designed to help users interact with decentralized finance (DeFi) data. The chatbot provides real-time information on yield rates, social feeds, and historical price data from various DeFi sources. It leverages the power of OpenAI's GPT model, DeFiLlama APIs, RSS3 APIs, and custom services to deliver accurate responses and analysis based on user inputs.
 
+## Demo
+Find the demo on youtube with this link [https://youtu.be/SQe47jWEXgk]
+
 ## High-Level Overview
 
 This system consists of a frontend and backend:
