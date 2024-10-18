@@ -54,6 +54,7 @@ Ensure you have the following installed:
 3. **OpenAI API Key**: You will need an API key from OpenAI to use GPT models.
 4. **DeFiLlama API Access** (public endpoint)
 5. **RSS3 API Access** (public endpoint)
+6. **CryptoCompare API Access**
 
 ### Backend Setup
 
